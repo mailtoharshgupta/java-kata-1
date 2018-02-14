@@ -81,6 +81,25 @@ public class KataWebServiceController {
         return ResponseEntity.ok(dtos);
     }
 
+    /**
+     * API to get all sorted list of publications by their title
+     * @return
+     */
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Returns all publications"),
+            @ApiResponse(code = 404, message = "Invalid resource")
+    })
+    @GetMapping(value = "/get/sort/title", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllSortedByTitle() {
+        LOGGER.debug("Request received getting all publications");
+        List<PublicationDTO> dtos = searchService.getAllPublications();
+        return ResponseEntity.ok(dtos);
+    }
+
+    /**
+     * API to get all unsorted list of publications.
+     * @return
+     */
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Returns all publications"),
             @ApiResponse(code = 404, message = "Invalid resource")
@@ -88,7 +107,7 @@ public class KataWebServiceController {
     @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAll() {
         LOGGER.debug("Request received getting all publications");
-        List<PublicationDTO> dtos = searchService.getAllPublications();
+        List<PublicationDTO> dtos = searchService.getAllUnsortedPublications();
         return ResponseEntity.ok(dtos);
     }
 

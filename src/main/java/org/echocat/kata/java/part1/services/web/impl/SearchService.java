@@ -91,4 +91,22 @@ public class SearchService implements ISearchService {
        return bookList;
     }
 
+    @Override
+    public List<PublicationDTO> getAllUnsortedPublications() {
+        List<Book> allBooks = bookDAS.getAllBooks();
+        List<Magazine> magazines = magazineDAS.getAllMagazines();
+        List<PublicationDTO> bookList =
+                allBooks
+                        .stream()
+                        .map(book -> (BookDTO) KataUtil.convert(book,BookDTO.class))
+                        .collect(Collectors.toList());
+        List<PublicationDTO> magazineList =
+                magazines
+                        .stream()
+                        .map(magazine -> (MagazineDTO) KataUtil.convert(magazine,MagazineDTO.class))
+                        .collect(Collectors.toList());
+        bookList.addAll(magazineList);
+        return bookList;
+    }
+
 }
