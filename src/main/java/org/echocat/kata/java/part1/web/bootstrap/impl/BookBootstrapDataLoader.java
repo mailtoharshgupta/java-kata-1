@@ -49,9 +49,9 @@ public class BookBootstrapDataLoader implements IBootstrapDataLoader {
             return Book
                     .builder()
                     .title(codes[0])
-                    .description(codes[1])
+                    .description(codes[3])
                     .authors(Arrays.asList(codes[2].split(",")))
-                    .isbn(codes[3])
+                    .isbn(codes[1])
                     .build();
         };
     }

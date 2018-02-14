@@ -48,9 +48,9 @@ public class MagazineBootstrapDataLoader implements IBootstrapDataLoader {
             return Magazine
                     .builder()
                     .title(codes[0])
-                    .authors(Arrays.asList(codes[1].split(",")))
-                    .publishedAt(codes[2])
-                    .isbn(codes[3])
+                    .authors(Arrays.asList(codes[2].split(",")))
+                    .publishedAt(codes[3])
+                    .isbn(codes[1])
                     .build();
         };
     }
