@@ -1,0 +1,24 @@
+package org.echocat.kata.java.part1.core.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Builder;
+
+import java.util.List;
+
+/**
+ * @author Harsh Gupta on {2/14/18}
+ */
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Book {
+
+    String title;
+    String description;
+    String isbn;
+    List<String> authors;
+
+}
