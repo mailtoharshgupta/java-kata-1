@@ -69,7 +69,7 @@ public class KataWebServiceController {
             @ApiResponse(code = 200, message = "Finds the Book or Magazine by Author email"),
             @ApiResponse(code = 404, message = "Books or magazines identified by  passed author email does not exist")
     })
-    @GetMapping(value = "/get/author/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get/author/email/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PublicationDTO>> getByEmail(@PathVariable String email) {
         LOGGER.debug("Request received for book/magazine with ISBN {}", email);
         List<PublicationDTO> dtos = Optional
