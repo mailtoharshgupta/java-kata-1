@@ -3,10 +3,7 @@ package org.echocat.kata.java.part1.web.controller;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.echocat.kata.java.part1.base.exception.ResourceNotFoundException;
-import org.echocat.kata.java.part1.base.model.BookDTO;
-import org.echocat.kata.java.part1.base.model.MagazineDTO;
 import org.echocat.kata.java.part1.base.model.PublicationDTO;
-import org.echocat.kata.java.part1.core.model.Magazine;
 import org.echocat.kata.java.part1.services.web.ISearchService;
 import org.echocat.kata.java.part1.web.annotation.Document;
 import org.slf4j.Logger;
@@ -42,7 +39,6 @@ public class KataWebServiceController {
     }
 
     /**
-     * Get API for getting a stock by ID
      *
      * @param isbn
      * @return A book or a magazine identified by ISBN
@@ -64,17 +60,17 @@ public class KataWebServiceController {
     }
 
     /**
-     * Get API for getting a stock by ID
+     * Get API for getting a publication by Email
      *
      * @param email
-     * @return A book or a magazine identified by ISBN
+     * @return A book or a magazine identified by Author's Email
      */
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Finds the Book or Magazine by Author email"),
-            @ApiResponse(code = 404, message = "Book or magazine identified by  passed author email does not exist")
+            @ApiResponse(code = 404, message = "Books or magazines identified by  passed author email does not exist")
     })
     @GetMapping(value = "/get/author/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getByEmail(@PathVariable String email) {
+    public ResponseEntity<List<PublicationDTO>> getByEmail(@PathVariable String email) {
         LOGGER.debug("Request received for book/magazine with ISBN {}", email);
         List<PublicationDTO> dtos = Optional
                 .ofNullable(searchService.findByAuthorEmail(email))
@@ -82,6 +78,17 @@ public class KataWebServiceController {
                     return new ResourceNotFoundException("Resource with email " + email +" not found");
                 });
 
+        return ResponseEntity.ok(dtos);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Returns all publications"),
+            @ApiResponse(code = 404, message = "Invalid resource")
+    })
+    @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAll() {
+        LOGGER.debug("Request received getting all publications");
+        List<PublicationDTO> dtos = searchService.getAllPublications();
         return ResponseEntity.ok(dtos);
     }
 

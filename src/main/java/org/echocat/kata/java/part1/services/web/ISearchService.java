@@ -15,4 +15,5 @@ public interface ISearchService {
 
     List<PublicationDTO> findByAuthorEmail(String email);
 
+    List<PublicationDTO> getAllPublications();
 }

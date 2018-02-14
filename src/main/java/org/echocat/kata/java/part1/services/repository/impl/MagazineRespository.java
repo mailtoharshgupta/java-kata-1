@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Harsh Gupta on {2/14/18}
@@ -31,6 +32,6 @@ public class MagazineRespository implements IMagazineRepository {
 
     @Override
     public List<Magazine> getAllMagazines() {
-        return (List<Magazine>)magazineMap.values();
+        return magazineMap.values().stream().collect(Collectors.toList());
     }
 }

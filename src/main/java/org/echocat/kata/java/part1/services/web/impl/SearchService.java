@@ -14,6 +14,8 @@ import org.echocat.kata.java.part1.services.web.ISearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,6 +64,31 @@ public class SearchService implements ISearchService {
                         .map(isbn -> findByISBN(isbn) )
                 .collect(Collectors.toList());
         return dtos;
+    }
+
+    @Override
+    public List<PublicationDTO> getAllPublications(){
+
+        List<Book> allBooks = bookDAS.getAllBooks();
+        List<Magazine> magazines = magazineDAS.getAllMagazines();
+        List<PublicationDTO> bookList =
+                allBooks
+                        .stream()
+                        .map(book -> (BookDTO) KataUtil.convert(book,BookDTO.class))
+                        .collect(Collectors.toList());
+        List<PublicationDTO> magazineList =
+                magazines
+                        .stream()
+                        .map(magazine -> (MagazineDTO) KataUtil.convert(magazine,MagazineDTO.class))
+                        .collect(Collectors.toList());
+        bookList.addAll(magazineList);
+       Collections.sort(bookList, new Comparator<PublicationDTO>() {
+           @Override
+           public int compare(PublicationDTO o1, PublicationDTO o2) {
+               return o1.getTitle().compareTo(o2.getTitle());
+           }
+       });
+       return bookList;
     }
 
 }
